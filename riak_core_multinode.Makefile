@@ -57,7 +57,7 @@ dev1 dev2 dev3: all
 ##
 ## Dialyzer
 ##
-APPS = kernel stdlib sasl erts ssl tools os_mon runtime_tools crypto inets \\
+APPS = kernel stdlib sasl erts ssl tools os_mon runtime_tools crypto inets \
 	xmerl webtool snmp public_key mnesia eunit syntax_tools compiler
 COMBO_PLT = $(HOME)/.{{appid}}_combo_dialyzer_plt
 

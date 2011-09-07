@@ -9,7 +9,7 @@
 {file, "riak_core_multinode.runner", "rel/files/{{nodeid}}"}.
 {chmod, 8#744, "rel/files/{{nodeid}}"}.
 {file, "riak_core_multinode.app.config", "rel/files/app.config"}.
-{template, "riak_core_multinode.vm.args", "rel/files/vm.args"}.
+{file, "riak_core_multinode.vm.args", "rel/files/vm.args"}.
 
 %% copy from riak_core
 {template, "riak_core.app.src", "apps/{{appid}}/src/{{appid}}.app.src"}.
