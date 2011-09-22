@@ -65,31 +65,33 @@ ERTS_PATH=$RUNNER_BASE_DIR/erts-$ERTS_VSN/bin
 # Setup command to control the node
 NODETOOL="$ERTS_PATH/escript $ERTS_PATH/nodetool $NAME_ARG $COOKIE_ARG"
 
+run()
+{
+    mod=$1
+    shift
+    cmd=$1
+    shift
+
+    # Make sure the local node IS running
+    RES=`$NODETOOL ping`
+    if [ "$RES" != "pong" ]; then
+        echo "Node is not running!"
+        exit 1
+    fi
+
+    $NODETOOL rpc $mod $cmd $@
+}
+
 # Check the first argument for instructions
 case "$1" in
     join)
-        # Make sure the local node IS running
-        RES=`$NODETOOL ping`
-        if [ "$RES" != "pong" ]; then
-            echo "Node is not running!"
-            exit 1
-        fi
-
         shift
-
-        $NODETOOL rpc {{appid}}_console join $@
+        run join $@
         ;;
 
     leave)
-        # Make sure the local node is running
-        RES=`$NODETOOL ping`
-        if [ "$RES" != "pong" ]; then
-            echo "Node is not running!"
-            exit 1
-        fi
-
         shift
-        $NODETOOL rpc {{appid}}__console leave $@
+        run {{appid}}_console leave $@
         ;;
 
     remove)
@@ -98,14 +100,8 @@ case "$1" in
             exit 1
         fi
 
-        RES=`$NODETOOL ping`
-        if [ "$RES" != "pong" ]; then
-            echo "Node is not running!"
-            exit 1
-        fi
-
         shift
-        $NODETOOL rpc {{appid}}_console remove $@
+        run {{appid}}_console remove $@
         ;;
 
     member_status)
@@ -114,15 +110,8 @@ case "$1" in
             exit 1
         fi
 
-        # Make sure the local node IS running
-        RES=`$NODETOOL ping`
-        if [ "$RES" != "pong" ]; then
-            echo "Node is not running!"
-            exit 1
-        fi
         shift
-
-        $NODETOOL rpc riak_core_console member_status $@
+        run riak_core_console member_status $@
         ;;
 
     ring_status)
@@ -131,15 +120,8 @@ case "$1" in
             exit 1
         fi
 
-        # Make sure the local node IS running
-        RES=`$NODETOOL ping`
-        if [ "$RES" != "pong" ]; then
-            echo "Node is not running!"
-            exit 1
-        fi
         shift
-
-        $NODETOOL rpc riak_core_console ring_status $@
+        run riak_core_console ring_status $@
         ;;
 
     services)
@@ -177,15 +159,8 @@ case "$1" in
         ;;
 
     ringready)
-        # Make sure the local node IS running
-        RES=`$NODETOOL ping`
-        if [ "$RES" != "pong" ]; then
-            echo "Node is not running!"
-            exit 1
-        fi
         shift
-
-        $NODETOOL rpc {{appid}}_console ringready $@
+        run {{appid}}_console ringready $@
         ;;
 
     *)
