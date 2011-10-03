@@ -86,7 +86,7 @@ run()
 case "$1" in
     join)
         shift
-        run join $@
+        run {{appid}}_console join $@
         ;;
 
     leave)
