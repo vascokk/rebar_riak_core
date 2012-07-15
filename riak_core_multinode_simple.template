@@ -1,0 +1,24 @@
+{variables, [{appid, "myapp"}, {nodeid, "mynode"}, {target_dir, "rel"}]}.
+
+%% based on simplenode
+{template, "riak_core_multinode.reltool.config", "{{target_dir}}/reltool.config"}.
+{file, "riak_core_multinode.erl.script", "{{target_dir}}/files/erl"}.
+{chmod, 8#744, "{{target_dir}}/files/erl"}.
+{file, "riak_core_multinode.nodetool", "{{target_dir}}/files/nodetool"}.
+{chmod, 8#744, "{{target_dir}}/files/nodetool"}.
+{file, "riak_core_multinode.runner", "{{target_dir}}/files/{{nodeid}}"}.
+{chmod, 8#744, "{{target_dir}}/files/{{nodeid}}"}.
+{file, "riak_core_multinode.app.config", "{{target_dir}}/files/app.config"}.
+{file, "riak_core_multinode.vm.args", "{{target_dir}}/files/vm.args"}.
+
+{template, "riak_core.gitignore", ".gitignore"}.
+
+%% rest of multinode stuff
+{template, "riak_core_multinode.Makefile", "Makefile"}.
+{template, "riak_core_multinode.admin-runner", "{{target_dir}}/files/{{nodeid}}-admin"}.
+{chmod, 8#744, "{{target_dir}}/files/{{nodeid}}-admin"}.
+{template, "riak_core_multinode.vars.config", "{{target_dir}}/vars.config"}.
+{template, "riak_core_multinode.dev1.config", "{{target_dir}}/vars/dev1.config"}.
+{template, "riak_core_multinode.dev2.config", "{{target_dir}}/vars/dev2.config"}.
+{template, "riak_core_multinode.dev3.config", "{{target_dir}}/vars/dev3.config"}.
+
